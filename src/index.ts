@@ -3,7 +3,11 @@ import { cors } from "hono/cors";
 
 import sectionsData from "./data/sections.json";
 
-const app = new Hono();
+type Bindings = {
+  VENUE_MAP_DATA: KVNamespace;
+};
+
+const app = new Hono<{ Bindings: Bindings }>();
 
 // Enable CORS for all routes
 app.use(
@@ -15,10 +19,8 @@ app.use(
   })
 );
 
-// Load JSON data from files
 const sections = sectionsData;
 
-// Root endpoint
 app.get("/", (c) => {
   return c.json({
     message: "Welcome to Hono JSON Server!",
@@ -30,26 +32,19 @@ app.get("/sections", (c) => {
   return c.json(sections);
 });
 
-// create a post endpoint the accepts a json body and returns it
 app.post("/sections", async (c) => {
   try {
     const body = await c.req.json();
 
-    console.log("Received body:", body);
-
-    // Write the body data to venue.json file
-    // const filePath = join(process.cwd(), "src", "data", "venue.json");
-    // await writeFile(filePath, JSON.stringify(body, null, 2), "utf8");
-
-    console.log("Data saved to venue.json successfully!");
+    await c.env.VENUE_MAP_DATA.put("venue.json", JSON.stringify(body, null, 2));
 
     return c.json({
       success: true,
-      message: "Data saved to venue.json",
+      message: "Data saved to KV storage",
       data: body,
     });
   } catch (error) {
-    console.error("Error saving to file:", error);
+    console.error("Error saving to KV storage:", error);
     return c.json(
       {
         success: false,
