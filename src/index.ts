@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 
-import sectionsData from "./data/sections.json";
+// import sectionsData from "./data/sections.json";
 
 type Bindings = {
   VENUE_MAP_DATA: KVNamespace;
@@ -19,7 +19,7 @@ app.use(
   })
 );
 
-const sections = sectionsData;
+// const sections = sectionsData;
 
 app.get("/", (c) => {
   return c.json({
@@ -28,7 +28,11 @@ app.get("/", (c) => {
   });
 });
 
-app.get("/sections", (c) => {
+app.get("/sections", async (c) => {
+  const sections = await c.env.VENUE_MAP_DATA.get("venue.json", {
+    type: "json",
+  });
+
   return c.json(sections);
 });
 
