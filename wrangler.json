@@ -6,8 +6,7 @@
   "kv_namespaces": [
     {
       "binding": "VENUE_MAP_DATA",
-      "id": "22f77ad4e65d4167af9b69421833a9dd",
-      "remote": true
+      "id": "22f77ad4e65d4167af9b69421833a9dd"
     }
   ]
 }
