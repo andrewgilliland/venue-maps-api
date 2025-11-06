@@ -13,7 +13,11 @@ const app = new Hono<{ Bindings: Bindings }>();
 app.use(
   "*",
   cors({
-    origin: ["http://localhost:5173", "http://localhost:3000"], // Add your frontend URLs
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:3000",
+      "http://venue-maps-bucket-1234567890.s3-website-us-east-1.amazonaws.com/",
+    ], // Add your frontend URLs
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
   })
