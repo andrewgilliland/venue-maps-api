@@ -16,7 +16,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "http://localhost:3000",
-      "http://venue-maps-bucket-1234567890.s3-website-us-east-1.amazonaws.com",
+      "https://d3bfy2q6taoc42.cloudfront.net",
     ], // Add your frontend URLs
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
