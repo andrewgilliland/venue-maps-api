@@ -43,10 +43,6 @@ app.get("/sections", async (c) => {
 app.get("/sections/:filename", async (c) => {
   const filename = c.req.param("filename");
 
-  console.log("filename: ", filename);
-
-  // console.log("bucket: ", bucket);
-
   const object = await c.env.VENUE_MAPS_BUCKET.get(`${filename}.json`);
 
   if (!object) {
