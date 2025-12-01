@@ -5,6 +5,7 @@ import { cors } from "hono/cors";
 
 type Bindings = {
   VENUE_MAP_DATA: KVNamespace;
+  VENUE_MAPS_BUCKET: R2Bucket;
 };
 
 const app = new Hono<{ Bindings: Bindings }>();
@@ -36,6 +37,20 @@ app.get("/sections", async (c) => {
   });
 
   return c.json(sections);
+});
+
+// GET GeoJSON file
+app.get("/sections/:filename", async (c) => {
+  const filename = c.req.param("filename");
+
+  const object = await c.env.VENUE_MAPS_BUCKET.get(`${filename}.json`);
+
+  if (!object) {
+    return c.json({ error: "File not found" }, 404);
+  }
+
+  const data = await object.json();
+  return c.json(data);
 });
 
 app.post("/sections", async (c) => {

@@ -9,5 +9,12 @@
       "id": "22f77ad4e65d4167af9b69421833a9dd",
       "remote": true
     }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "VENUE_MAPS_BUCKET",
+      "bucket_name": "venue-maps",
+      "remote": true
+    }
   ]
 }
